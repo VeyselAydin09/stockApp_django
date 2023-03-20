@@ -45,6 +45,7 @@ class BrandSerializer(serializers.ModelSerializer):
 
 
 class FirmSerializer(serializers.ModelSerializer):
+  
     class Meta:
         model = Firm
         fields = (
@@ -54,3 +55,16 @@ class FirmSerializer(serializers.ModelSerializer):
             'image',
             'address'
         )
+
+class PurchasesSerializer(serializers.ModelSerializer):
+    
+    user = serializers.StringRelatedField() 
+    firm = serializers.StringRelatedField()
+    brand = serializers.StringRelatedField()
+    product = serializers.StringRelatedField()
+    product_id = serializers.IntegerField()
+    brand_id = serializers.IntegerField()
+    firm_id = serializers.IntegerField()
+    category = serializers.SerializerMethodField()
+    time_hour = serializers.SerializerMethodField()
+    createds = serializers.SerializerMethodField()

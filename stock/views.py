@@ -42,3 +42,18 @@ class PurchaseView(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_fields = ['firm', 'product']
     search_fields = ['firm']    
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        #! #############  ADD Product Stock ############
+        
+        purchase = request.data
+        product = Product.objects.get(id=purchase["product_id"])
+        product.stock += purchase["quantity"]
+        product.save()
+        
+        #! #############################################
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)

@@ -132,3 +132,13 @@ class SalesSerializer(serializers.ModelSerializer):
             "time_hour",
             "createds",
         )
+
+     # def get_category(self, obj):
+    #     return obj.product.category.name
+    
+    def get_time_hour(self, obj):
+        return datetime.datetime.strftime(obj.createds, "%H:%M")
+    
+    def get_createds(self, obj):
+        return datetime.datetime.strftime(obj.createds, "%d,%m,%Y")
+    

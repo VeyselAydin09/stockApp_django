@@ -69,7 +69,7 @@ class PurchasesSerializer(serializers.ModelSerializer):
     time_hour = serializers.SerializerMethodField()
     createds = serializers.SerializerMethodField()
 
-      class Meta:
+class Meta:
         model = Purchases
         fields = (
             "id",
@@ -94,12 +94,12 @@ class PurchasesSerializer(serializers.ModelSerializer):
     #     product = Product.objects.get(id=obj.product_id)
     #     return Category.objects.get(id=product.category_id).name
     
-    def get_category(self, obj):
+      def get_category(self, obj):
         return obj.product.category.name
     
-    def get_time_hour(self, obj):
+      def get_time_hour(self, obj):
         return datetime.datetime.strftime(obj.createds, "%H:%M")
     
-    def get_createds(self, obj):
+      def get_createds(self, obj):
         return datetime.datetime.strftime(obj.createds, "%d,%m,%Y")
     

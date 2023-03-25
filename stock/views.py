@@ -66,3 +66,11 @@ class PurchaseView(viewsets.ModelViewSet):
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
+
+         #! #############  UPDATE Product Stock ############
+        purchase = request.data
+        product = Product.objects.get(id=instance.product_id)
+        
+        sonuc = purchase["quantity"] - instance.quantity
+        product.stock += sonuc
+        product.save()

@@ -4,6 +4,7 @@ from .models import Category, Brand, Product, Firm, Purchases, Sales
 from .serializers import CategorySerializer, CategoryProductSerializers, BrandSerializer, FirmSerializer, PurchasesSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import DjangoModelPermissions
+from rest_framework.response import Response
 
 
 
@@ -74,3 +75,12 @@ class PurchaseView(viewsets.ModelViewSet):
         sonuc = purchase["quantity"] - instance.quantity
         product.stock += sonuc
         product.save()
+
+        self.perform_update(serializer)
+
+        if getattr(instance, '_prefetched_objects_cache', None):
+            # If 'prefetch_related' has been applied to a queryset, we need to
+            # forcibly invalidate the prefetch cache on the instance.
+            instance._prefetched_objects_cache = {}
+
+        return Response(serializer.data)

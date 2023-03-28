@@ -1,6 +1,6 @@
 from django.urls import path
 from rest_framework import routers
-from .views import CategoryView,BrandView,FirmView,PurchaseView
+from .views import CategoryView,BrandView,FirmView,PurchaseView,SalesView
 
 
 router = routers.DefaultRouter()
